@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\checkout;
 use App\checkout_product;
+use Cartalyst\Stripe\Api\PaymentIntents;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
@@ -28,13 +29,17 @@ class CheckoutController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
+
+        Stripe::setApiKey('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');
+
         try {
             $validated = $request->validate([
                 'firstname' => 'required|max:255',
                 'lastname' => 'required|max:255',
                 'city' => 'required',
-                'Phonenumber' => 'required|min:11|numeric',
+                'Phonenumber' => 'required|numeric|digits:10',
                 'email' => 'required|email',
                 'add1' => 'required',
             ]);
@@ -51,7 +56,7 @@ class CheckoutController extends Controller
                 'zip' => $request->zip,
                 'orderNotes' => $request->message,
             ]);
-    
+
             foreach (Cart::content() as $item) {
                 // echo "<pre>"; print_r($item); die;
                 checkout_product::create([
@@ -75,17 +80,17 @@ class CheckoutController extends Controller
             ]);
 
             return redirect()->route('confirmation', ['id' => $order->id]);
-
         } catch (Exception $e) {
-           throw $e;
+            throw $e;
         }
     }
 
-    public function confirmation($id){
+    public function confirmation($id)
+    {
         $checkout = checkout::where(['id' => $id])->first();
         $checkout_product = checkout_product::where(['checkout_id' => $id])->get();
         // echo "<pre>"; print_r($checkout); die;
         // echo "<pre>"; print_r($checkout_product); die;
-        return view('confirmation')->with(compact('checkout','checkout_product'));;
+        return view('confirmation')->with(compact('checkout', 'checkout_product'));;
     }
 }

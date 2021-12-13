@@ -49,38 +49,38 @@
                         <div class="row contact_form">
 
                             <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First name">
+                                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First name" value="{{ old('firstname') }}">
                                 <span class="placeholder" data-placeholder="First name"></span>
                             </div>
                             <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last name">
+                                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last name" value="{{ old('lastname') }}">
                                 <span class="placeholder" data-placeholder="Last name"></span>
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="company" name="company" placeholder="Company name">
+                                <input type="text" class="form-control" id="company" name="company" placeholder="Company name" value="{{ old('company') }}">
                             </div>
                             <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="Phonenumber" name="Phonenumber" placeholder="Phone number">
+                                <input type="text" class="form-control" id="Phonenumber" name="Phonenumber" placeholder="Phone number" value="{{ old('Phonenumber') }}">
                                 <span class="placeholder" data-placeholder="Phone number"></span>
                             </div>
                             <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Email Address">
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Email Address" value="{{ old('email') }}">
                                 <span class="placeholder" data-placeholder="Email Address"></span>
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="add1" name="add1" placeholder="Address line 01">
+                                <input type="text" class="form-control" id="add1" name="add1" placeholder="Address line 01" value="{{ old('add1') }}">
                                 <span class="placeholder" data-placeholder="Address line 01"></span>
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="add2" name="add2" placeholder="Address line 02">
+                                <input type="text" class="form-control" id="add2" name="add2" placeholder="Address line 02" value="{{ old('add2') }}">
                                 <span class="placeholder" data-placeholder="Address line 02"></span>
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="city" name="city" placeholder="Town/City">
+                                <input type="text" class="form-control" id="city" name="city" placeholder="Town/City" value="{{ old('city') }}">
                                 <span class="placeholder" data-placeholder="Town/City"></span>
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
+                                <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP" value="{{ old('zip') }}">
                             </div>
                             <div class="col-md-12 form-group">
                                 <h3>Shipping Details</h3>
@@ -94,6 +94,7 @@
                                     <label for="card-element">Credit or debit card</label>
                                     <div id="card-element"></div>
                                     <div id="card-errors"></div>
+                                    <p id="payment-result">
                                 </div>
                             </div>
                         </div>
@@ -174,8 +175,9 @@
 
 <script>
     (function() {
+
         // Create a Stripe client
-        var stripe = Stripe('pk_test_51IME1mGQl9CODMYbvlmlRV2Z4n10SCvPuo8iPLQxlDk1YI4WNHhl4218nDNTzuGCBBTamESQfX2Jqrvsv4mUpeSN005yjeqclw');
+        var stripe = Stripe('pk_live_51IME1mGQl9CODMYbWYMTbqZkEqSOGw5wVCALbKWulJdMEJPPKCI9JebFYB2e3cYOwG0D7hG60EmJzYixEvdajT5x00USgAjPDl');
         // Create an instance of Elements
         var elements = stripe.elements();
         // Custom styling can be passed to options when creating an Element.
@@ -214,6 +216,7 @@
         });
         // Handle form submission
         var form = document.getElementById('payment-form');
+
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             // Disable the submit button to prevent repeated clicks
