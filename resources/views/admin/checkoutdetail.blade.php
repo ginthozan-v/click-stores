@@ -39,7 +39,7 @@
                                 <h4>
                                     <div class="image">
                                         <img src="{{ asset('img/logo.png') }}" alt="User Image" style="width: 80px; margin-bottom:10px">
-                                      </div>
+                                    </div>
                                     {{-- <small class="float-right">Date: 2/10/2014</small> --}}
                                 </h4>
                             </div>
@@ -50,11 +50,10 @@
                             <div class="col-sm-4 invoice-col">
                                 From
                                 <address>
-                                    <strong>click-store.ca</strong><br>
-                                    795 Folsom Ave, Suite 600<br>
-                                    San Francisco, CA 94107<br>
-                                    Phone: (804) 123-5432<br>
-                                    Email: info@click-store.ca
+                                    <strong>www.clickstores.ca</strong><br>
+                                    196 Dougherty Crescent,<br>Whitchurch-Stouffville,<br>ON L4A 0A6
+                                    Phone: +1 (647) 854-5354<br>
+                                    Email: info@clickstores.ca
                                 </address>
                             </div>
                             <!-- /.col -->
@@ -97,17 +96,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($checkoutdetail->products as $product) 
+                                        @foreach($checkoutdetail->products as $product)
                                         <tr>
-                                            <td><div class="product-img">
-                                                <img src="{{$product->image}}" alt="Product Image" class="img-size-50">
-                                              </div></td>
+                                            <td>
+                                                <div class="product-img">
+                                                    <img src="{{$product->image}}" alt="Product Image" class="img-size-50">
+                                                </div>
+                                            </td>
                                             <td>{{$product->pivot->qty}}</td>
                                             <td>{{$product->title}}</td>
                                             <td>{{$product->id}}</td>
                                             <td>{{$product->presentPrice()}}</td>
                                         </tr>
-                                       @endforeach
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -137,7 +138,7 @@
                                         <tr>
                                             <th style="width:50%">Subtotal:</th>
                                             <td>${{ $checkoutdetail->subtotal}}</td>
-                                         
+
                                         </tr>
                                         <tr>
                                             <th>Tax (9.3%)</th>
@@ -164,10 +165,10 @@
                                     Payment
                                 </button> --}}
 
-                            
+
 
                                 <a href="{{ route('delivered', $checkoutdetail->id) }}" class="btn btn-primary float-right" style="margin-right: 5px;">
-                                Delivered </a>
+                                    Delivered </a>
                             </div>
                         </div>
                     </div>

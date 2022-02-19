@@ -48,4 +48,15 @@ class DashboardController extends Controller
 
         return redirect()->back()->with('flash_message_success', 'Delivered Successfully!');
     }
+
+    //// Delete Product
+    ////////////////////////////////////////////////////////////////
+    public function checkoutdelete($id = null)
+    {
+        if (!empty($id)) {
+            $checkout = checkout::find($id);
+            $checkout->delete();
+            return redirect()->back()->with('flash_message_success', 'Checkout deleted Successfully!');
+        }
+    }
 }
