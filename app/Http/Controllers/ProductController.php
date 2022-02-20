@@ -26,7 +26,7 @@ class ProductController extends Controller
 
 
 
-    //// Add Product
+    /// Add Product
     ////////////////////////////////////////////////////////////////
     public function addProduct(Request $request)
     {
@@ -41,6 +41,13 @@ class ProductController extends Controller
             ]);
 
             $data = $request->all();
+
+            if ($request->has('InStock')) {
+                $data['InStock'] = true;
+            } else {
+                $data['InStock'] = false;
+            }
+
             $product = new Product;
             $product->category_id = $data['MainCategoryName'];
 
@@ -54,6 +61,7 @@ class ProductController extends Controller
             $product->oldPrice = $data['inputOldPrice'];
             $product->price = $data['inputPrice'];
             $product->description = $data['inputDescription'];
+            $product->in_stock = $data['InStock'];
 
             $category = Category::where(['id' => $data['MainCategoryName']])->pluck('id');
 
@@ -107,6 +115,11 @@ class ProductController extends Controller
     {
         if ($request->isMethod('post')) {
             $data = $request->all();
+            if ($request->has('InStock')) {
+                $data['InStock'] = true;
+            } else {
+                $data['InStock'] = false;
+            }
             Product::where(['id' => $id])->update([
                 'category_id' => $data['MainCategoryName'],
                 'title' => $data['ProductTitle'],
@@ -114,7 +127,8 @@ class ProductController extends Controller
                 'details' => $data['inputDetail'],
                 'oldPrice' => $data['inputOldPrice'],
                 'price' => $data['inputPrice'],
-                'description' => $data['inputDescription']
+                'description' => $data['inputDescription'],
+                'in_stock' => $data['InStock']
             ]);
             if (isset($data['SubCategoryName'])) {
                 Product::where(['id' => $id])->update(['sub_category_id' => $data['SubCategoryName']]);

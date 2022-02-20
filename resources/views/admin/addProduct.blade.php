@@ -9,12 +9,27 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add Product</h1>
+                    @if(isset($productDetail))
+                    <h1>
+                        Edit Product
+                    </h1>
+                    @else
+                    <h1>
+                        Add Product
+                    </h1>
+                    @endif
+
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Add Product</li>
+                        <li class="breadcrumb-item active">
+                            @if(isset($productDetail))
+                            Edit Product
+                            @else
+                            Add Product
+                            @endif
+                        </li>
                     </ol>
                 </div>
             </div>
@@ -70,11 +85,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputOldPrice">Old Price</label>
-                                <input type="text" id="inputOldPrice" name="inputOldPrice"  class="form-control" placeholder="Enter old price" value="{{ $productDetail->oldPrice }}">
+                                <input type="text" id="inputOldPrice" name="inputOldPrice" class="form-control" placeholder="Enter old price" value="{{ $productDetail->oldPrice }}">
                             </div>
                             <div class="form-group">
                                 <label for="inputPrice">Price</label>
-                                <input type="text" id="inputPrice" name="inputPrice"  class="form-control price_input" placeholder="Enter price" value="{{ $productDetail->price }}">
+                                <input type="text" id="inputPrice" name="inputPrice" class="form-control price_input" placeholder="Enter price" value="{{ $productDetail->price }}">
                             </div>
                             <div class="form-group">
                                 <label for="MainCategoryName">Main Category</label>
@@ -100,6 +115,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="inputPrice">In Stock</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="InStock" name="InStock" {{$productDetail->in_stock?'checked="checked"':''}}>
+                                    <label class="form-check-label" for="InStock">
+                                        Checked if available
+                                    </label>
+                                </div>
+                            </div>
 
                         </div>
                         <!-- /.card-body -->
@@ -110,8 +134,7 @@
                     </form>
                     @else
 
-                    <form method="post" action="{{ route('AddProduct')}}" name="add_product" id="add_product" 
-                        enctype="multipart/form-data">
+                    <form method="post" action="{{ route('AddProduct')}}" name="add_product" id="add_product" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="card-body">
                             <div class="form-group">
@@ -128,11 +151,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputOldPrice">Old Price </label>
-                                <input type="text"  id="inputOldPrice" name="inputOldPrice" class="form-control price_input" placeholder="Enter old price">
+                                <input type="text" id="inputOldPrice" name="inputOldPrice" class="form-control price_input" placeholder="Enter old price">
                             </div>
                             <div class="form-group">
                                 <label for="inputPrice">Price</label>
-                                <input type="text" id="inputPrice" name="inputPrice"  class="form-control price_input" placeholder="Enter price">
+                                <input type="text" id="inputPrice" name="inputPrice" class="form-control price_input" placeholder="Enter price">
                             </div>
                             <div class="form-group">
                                 <label for="MainCategoryName">Main Category</label>
@@ -158,6 +181,13 @@
                                         <span class="input-group-text">Upload</span>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="InStock" name="InStock">
+                                <label class="form-check-label" for="InStock">
+                                    Checked if available
+                                </label>
                             </div>
                         </div>
                         <!-- /.card-body -->

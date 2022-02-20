@@ -33,27 +33,27 @@
                             <form action="#">
                                 <ul>
                                     @foreach ($categories as $category )
-                                    <li class="filter-list dropdown-btn"> 
+                                    <li class="filter-list dropdown-btn">
                                         <label> <a class="text-uppercase" href="{{ route('shop.index', ['category' => $category->id])}}"> {{ $category->name }}</a> </label>
                                         <i class="fa fa-caret-down"></i>
-                                        <li class="dropdown-container">
-                                            <ul>
-                                                @foreach ($subcategories as $subcat )
-                                                @if($subcat->category_id == $category->id)
-                                                <li class="sub-list">
-                                                    <label> <a class="text-lowercase font-weight-bold text-muted" href="{{ route('shop.index', ['subcategory' => $subcat->id])}}" id="apple" name="brand">
-                                                        {{ $subcat->name }} 
+                                    <li class="dropdown-container">
+                                        <ul>
+                                            @foreach ($subcategories as $subcat )
+                                            @if($subcat->category_id == $category->id)
+                                            <li class="sub-list">
+                                                <label> <a class="text-lowercase font-weight-bold text-muted" href="{{ route('shop.index', ['subcategory' => $subcat->id])}}" id="apple" name="brand">
+                                                        {{ $subcat->name }}
                                                     </a></label>
-                                                </li>
-                                                @endif
-                                                @endforeach
-                                            </ul>
-                                        </li>
+                                            </li>
+                                            @endif
+                                            @endforeach
+                                        </ul>
                                     </li>
-                                    @endforeach
-                                </ul>
-                            </form>
                         </li>
+                        @endforeach
+                    </ul>
+                    </form>
+                    </li>
                     </ul>
                 </div>
             </div>
@@ -61,15 +61,15 @@
                 <!-- Start Filter Bar -->
                 <div class="flex-wrap filter-bar d-flex align-items-center">
                     <div>
-                    <form action="{{ route('search') }}" method="get">
+                        <form action="{{ route('search') }}" method="get">
 
-                        <div class="input-group filter-bar-search">
+                            <div class="input-group filter-bar-search">
                                 {{ csrf_field() }}
                                 <input type="text" placeholder="Search" name="search" id="search">
                                 <div class="input-group-append">
                                     <button type="submit"><i class="ti-search"></i></button>
                                 </div>
-                        </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -78,9 +78,10 @@
                 <section class="container pb-40 shop-product">
                     <div class="section-intro pb-60px">
                         <h2>
-                        @if(isset( $searchName))
-                        <a class="icon_btn " href="{{ route('shop.index') }}"><i class="fas fa-arrow-left text-black"></i></a>
-                        <span class=" section-intro__style">{{$searchName}} </span></h2>
+                            @if(isset( $searchName))
+                            <a class="icon_btn " href="{{ route('shop.index') }}"><i class="fas fa-arrow-left text-black"></i></a>
+                            <span class=" section-intro__style">{{$searchName}} </span>
+                        </h2>
                         @else
                         <span class=" section-intro__style">{{$categoryName}} </span></h2>
                         @endif
@@ -92,25 +93,20 @@
                             <div class="text-center card card-product card-product1">
                                 <div class="card-product__img">
                                     @if($product->images->count())
-                                    <img class="card-img"
-                                        src="{{ asset($product->images[0]->ImageName) }}"
-                                        alt="">
+                                    <img class="card-img" src="{{ asset($product->images[0]->ImageName) }}" alt="">
                                     @else
-                                    <img class="card-img"
-                                        src="/img/products/noimage.png"
-                                        alt="">
+                                    <img class="card-img" src="/img/products/noimage.png" alt="">
                                     @endif
                                     <ul class="card-product__imgOverlay">
                                         <li>
-                                            <a
-                                                href="{{ route('shop.details', $product ->id) }}">
+                                            <a href="{{ route('shop.details', $product ->id) }}">
                                                 <button><i class="ti-eye"></i></button>
                                             </a>
                                         </li>
 
                                         <li>
-                                            <form action="{{ route('cart.store') }}"
-                                                method="post">
+                                            @if($product->in_stock == 1)
+                                            <form action="{{ route('cart.store') }}" method="post">
                                                 {{ csrf_field() }}
                                                 <input type="hidden" name="id" value="{{ $product->id }}">
                                                 <input type="hidden" name="title" value="{{ $product->title }}">
@@ -121,6 +117,7 @@
                                                 <button type="submit"><i class="ti-shopping-cart"></i></button>
 
                                             </form>
+                                            @endif
                                         </li>
 
                                     </ul>
@@ -128,7 +125,12 @@
                                 <div class="card-body">
                                     <!-- <p>Accessories</p> -->
                                     <h4 class="card-product__title text-truncate"><a href="#">{{ $product ->title }}</a></h4>
+                                    @if($product->in_stock == 0)
+                                    <del class="text-danger">Stock not available</del>
+                                    @else
                                     <del class="text-danger">List Price: {{ $product ->oldPrice() }}</del>
+                                    @endif
+
                                     <p class="card-product__price">{{ $product ->presentPrice() }}</p>
                                 </div>
                             </div>
@@ -142,8 +144,8 @@
                     <nav class="justify-content-center d-flex">
                         {{-- {{ $products->links() }} --}}
                         {{ $products->appends(request()->input())->links() }}
-                    </nav> 
-                  
+                    </nav>
+
                 </section>
                 <!-- End Best Seller -->
             </div>

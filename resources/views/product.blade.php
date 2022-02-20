@@ -75,7 +75,12 @@
 
 
                         </div>
+                        @if($product->in_stock == 0)
+                        <button class="button primary-btn mt-5" disabled="disabled">Stock not available</button>
+                        @else
                         <button type="submit" class="button primary-btn mt-5">Add to Cart</button>
+                        @endif
+
                     </form>
                     <!-- <div class="card_area d-flex align-items-center">
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
