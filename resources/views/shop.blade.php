@@ -95,7 +95,7 @@
                                     @if($product->images->count())
                                     <img class="card-img" src="{{ asset($product->images[0]->ImageName) }}" alt="">
                                     @else
-                                    <img class="card-img" src="/img/products/noimage.png" alt="">
+                                    <img class="card-img" src="/img/products/no-image.png" alt="">
                                     @endif
                                     <ul class="card-product__imgOverlay">
                                         <li>
